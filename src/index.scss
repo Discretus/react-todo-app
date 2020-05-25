@@ -14,3 +14,11 @@
   margin-top: 1rem;
 }
 
+.github {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  img {
+    width: 30px;
+  }
+}
