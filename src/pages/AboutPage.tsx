@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom'
-import GithubLogo from './github-logo.svg'
+import GithubLogo from '../resources/github-logo.svg'
 
 const AboutPage: React.FC = () => {
     const history = useHistory()
