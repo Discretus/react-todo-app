@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ITodo from "../entities/ITodo";
 import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";
 
 const TodosPage: React.FC = () => {
     const [todos, setTodos] = useState<ITodo[]>([])
+
+    useEffect(() => {
+        const saved = JSON.parse(localStorage.getItem('todos') || '[]') as ITodo[]
+        setTodos(saved)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
 
     const addTodo = (title: string): void => {
         const newTodo: ITodo = {
