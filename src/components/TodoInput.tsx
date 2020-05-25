@@ -8,10 +8,10 @@ const TodoInput: React.FC<TodoInputProps> = ({addTodo}) => {
     const ref = useRef<HTMLInputElement>(null)
 
     const pressEnter = (event: React.KeyboardEvent): void => {
-        if (event.key === "Enter" && ref.current!.value.trim()) {
+        if (event.key === 'Enter' && ref.current!.value.trim()) {
             const title = ref.current!.value;
             addTodo(title)
-            ref.current!.value = "";
+            ref.current!.value = '';
         }
     }
 

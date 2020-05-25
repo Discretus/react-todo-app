@@ -1,22 +1,22 @@
 import React from "react";
-import ITodo from "../entities/ITodo";
+import {TodoState} from "../entities/Intefaces";
 
 interface TodoListProps {
-    todos: ITodo[]
+    todos: TodoState
 
-    toggleTodo(id: number): void
+    toggleTodo(id: string): void
 
-    deleteTodo(id: number): void
+    deleteTodo(id: string): void
 }
 
 const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo, deleteTodo}) => {
-    if (todos.length === 0) {
+    if (Object.values(todos).length === 0) {
         return <p className="center no-select">No todos</p>
     }
 
     return (
         <ul>
-            {todos.map((todo) => {
+            {Object.values(todos).reverse().map((todo) => {
                 const classes = ['todo']
                 if (todo.completed) {
                     classes.push('completed')
