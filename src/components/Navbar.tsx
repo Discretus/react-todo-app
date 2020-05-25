@@ -4,7 +4,7 @@ import {NavLink, useHistory} from "react-router-dom";
 const Navbar: React.FC = () => (
     <nav>
         <div className="nav-wrapper grey darken-3">
-            <NavLink to="/" className="brand-logo left ml-4">Logo</NavLink>
+            <NavLink to="/" className="brand-logo left ml-4">ToDoApp</NavLink>
             <ul id="nav-mobile" className="right">
                 <li><NavLink to="/">Todos</NavLink></li>
                 <li><NavLink to="/about">About</NavLink></li>
