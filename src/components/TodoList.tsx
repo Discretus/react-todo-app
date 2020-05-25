@@ -11,7 +11,7 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo, deleteTodo}) => {
     if (todos.length === 0) {
-        return <p className="center">No todos</p>
+        return <p className="center no-select">No todos</p>
     }
 
     return (
@@ -26,7 +26,7 @@ const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo, deleteTodo}) => {
                         <label>
                             <input type="checkbox" checked={todo.completed} onChange={() => toggleTodo(todo.id)}/>
                             <span>{todo.title}</span>
-                            <i className="material-icons red-text" onClick={() => deleteTodo(todo.id)}>delete</i>
+                            <i className="material-icons red-text no-select" onClick={() => deleteTodo(todo.id)}>delete</i>
                         </label>
                     </li>
                 )

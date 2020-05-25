@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 
 const Navbar: React.FC = () => (
     <nav>
-        <div className="nav-wrapper grey darken-3">
+        <div className="nav-wrapper grey darken-3 no-select">
             <NavLink to="/" className="brand-logo left ml-4">ToDoApp</NavLink>
             <ul id="nav-mobile" className="right">
                 <li><NavLink to="/">Todos</NavLink></li>
