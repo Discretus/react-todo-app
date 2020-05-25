@@ -1,0 +1,16 @@
+import React from "react";
+import {NavLink, useHistory} from "react-router-dom";
+
+const Navbar: React.FC = () => (
+    <nav>
+        <div className="nav-wrapper grey darken-3">
+            <NavLink to="/" className="brand-logo left ml-4">Logo</NavLink>
+            <ul id="nav-mobile" className="right">
+                <li><NavLink to="/">Todos</NavLink></li>
+                <li><NavLink to="/about">About</NavLink></li>
+            </ul>
+        </div>
+    </nav>
+)
+
+export default Navbar;
