@@ -14,7 +14,6 @@ const App: React.FC = () => {
                     <Route component={AboutPage} path="/about" exact/>
                 </Switch>
             </div>
-
         </BrowserRouter>
     )
 }

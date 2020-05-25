@@ -1,5 +1,5 @@
 
-*{
+* {
   font-family: 'Roboto', sans-serif;
   margin: 0px;
   padding: 0px;
@@ -24,6 +24,7 @@
   display: flex;
   cursor: pointer;
   align-items: center;
+
   img {
     width: 30px;
   }
@@ -31,4 +32,21 @@
 
 .brand-logo {
   font-family: 'Bebas Neue', cursive;
+}
+
+.todo {
+  margin-bottom: 1rem;
+}
+
+.todo.completed span {
+  text-decoration: line-through;
+}
+
+.todo label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem;
+  background: #f3f3f3;
 }

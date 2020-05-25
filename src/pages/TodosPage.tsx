@@ -1,40 +1,42 @@
 import React, {useState} from 'react';
-import ITask from "../entities/ITask";
+import ITodo from "../entities/ITodo";
 import TodoInput from "../components/TodoInput";
+import TodoList from "../components/TodoList";
 
 const TodosPage: React.FC = () => {
-    const [todos, setTodos] = useState<ITask[]>([])
+    const [todos, setTodos] = useState<ITodo[]>([])
 
-    const addTask = (title: string): void => {
-        const newTask: ITask = {
+    const addTodo = (title: string): void => {
+        const newTodo: ITodo = {
             id: Date.now(),
             title,
             completed: false
         }
-        setTodos(prev => [newTask, ...prev])
+        setTodos(prev => [newTodo, ...prev])
     }
 
-    const toggleTask = (id: number): void => {
+    const toggleTodo = (id: number): void => {
         setTodos(prev =>
-            prev.map((task) => {
-                if (task.id === id) {
+            prev.map((todo) => {
+                if (todo.id === id) {
                     return {
-                        ...task,
-                        completed: !task.completed
+                        ...todo,
+                        completed: !todo.completed
                     }
                 }
-                return task;
+                return todo;
             })
         )
     }
 
-    const deleteTask = (id: number): void => {
-        setTodos(prev => prev.filter((task) => task.id !== id))
+    const deleteTodo = (id: number): void => {
+        setTodos(prev => prev.filter((todo) => todo.id !== id))
     }
 
     return (
         <React.Fragment>
-            <TodoInput addTask={addTask}/>
+            <TodoInput addTodo={addTodo}/>
+            <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
         </React.Fragment>
     )
 }

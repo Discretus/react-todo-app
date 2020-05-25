@@ -1,16 +1,29 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 interface TodoInputProps {
-    addTask(title: string): void
+    addTodo(title: string): void
 }
 
-const TodoInput: React.FC<TodoInputProps> = ({addTask}) => {
+const TodoInput: React.FC<TodoInputProps> = ({addTodo}) => {
+    const ref = useRef<HTMLInputElement>(null)
+
+    const pressEnter = (event: React.KeyboardEvent): void => {
+        if (event.key === "Enter" && ref.current!.value.trim()) {
+            const title = ref.current!.value;
+            addTodo(title)
+            ref.current!.value = "";
+        }
+    }
+
     return (
         <div className="row">
-            <div className="input-field col s9">
-                <input type="text" placeholder="Enter new task"/>
+            <div className="input-field col s12">
+                <input
+                    ref={ref}
+                    onKeyPress={pressEnter}
+                    type="text"
+                    placeholder="Enter new task"/>
             </div>
-            <button className="mt-5 waves-effect waves-light btn col s3">button</button>
         </div>
     )
 }
