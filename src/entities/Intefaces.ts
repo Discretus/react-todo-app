@@ -1,9 +1,9 @@
 export interface TodoItem {
-    id: string
-    title: string
-    completed: boolean
+  id: string
+  title: string
+  completed: boolean
 }
 
 export interface TodoState {
-    [id: string]: TodoItem
+  [id: string]: TodoItem
 }
