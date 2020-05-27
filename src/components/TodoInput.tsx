@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 
 interface TodoInputProps {
-  addTodo(title: string): void
+  addTodo(text: string): void;
 }
 
 const TodoInput: React.FC<TodoInputProps> = React.memo(({addTodo}) => {

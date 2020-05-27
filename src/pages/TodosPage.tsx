@@ -1,55 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
+
 import TodoInput from '../components/TodoInput';
 import TodoList from '../components/TodoList';
-import {TodoItem, TodoState} from '../entities/Intefaces';
+import {ADD_TODO, DELETE_TODO, SET_TODOS, Todo, todoReducer, TOGGLE_TODO} from '../entities/store';
 
 const TodosPage: React.FC = () => {
-  const [todos, setTodos] = useState<TodoState>({});
+  const [todosDict, dispatch] = useReducer(todoReducer, {});
 
   useEffect(() => {
-    const saved = JSON.parse(
-      localStorage.getItem('todos') || '{}'
-    ) as TodoState;
-    setTodos(saved);
+    const state: string | null = localStorage.getItem('todo_state');
+    if (state) {
+      dispatch({
+        type : SET_TODOS,
+        state: JSON.parse(state)
+      });
+    }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+  const todos: Todo[] = Object.values(todosDict).reverse();
 
-  const addTodo = (title: string): void => {
-    const id: string = Object.values(todos).length.toString();
-    const newTodo: TodoItem = {
+  const addTodo = (text: string) =>
+    dispatch({
+      type: ADD_TODO,
+      text,
+    });
+
+  const deleteTodo = (id: string) =>
+    dispatch({
+      type: DELETE_TODO,
       id,
-      title,
-      completed: false,
-    };
-    setTodos((prev) => {
-      let newState = Object.assign({}, prev);
-      newState[id] = newTodo;
-      return newState;
     });
-  };
 
-  const toggleTodo = (id: string): void => {
-    setTodos((prev) => {
-      return {
-        ...prev,
-        [id]: {
-          ...prev[id],
-          completed: !prev[id].completed,
-        },
-      };
+  const toggleTodo = (id: string) =>
+    dispatch({
+      type: TOGGLE_TODO,
+      id,
     });
-  };
-
-  const deleteTodo = (id: string): void => {
-    setTodos((prev) => {
-      let newState = Object.assign({}, prev);
-      delete newState[id];
-      return newState;
-    });
-  };
 
   return (
     <React.Fragment>
