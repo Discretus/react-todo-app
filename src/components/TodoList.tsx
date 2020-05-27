@@ -1,5 +1,6 @@
 import React from 'react';
 import {Todo} from '../entities/store';
+import TodoItem from './TodoItem';
 
 interface TodoListProps {
   todos: Todo[];
@@ -17,19 +18,7 @@ const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo, deleteTodo}) => {
   return (
     <ul>
       {todos.map((todo) => {
-        const classes = ['todo'];
-        if (todo.toggled) {
-          classes.push('completed');
-        }
-        return (
-          <li className={classes.join(' ')} key={todo.id}>
-            <label>
-              <input type="checkbox" checked={todo.toggled} onChange={() => toggleTodo(todo.id)}/>
-              <span>{todo.text}</span>
-              <i className="material-icons red-text no-select" onClick={() => deleteTodo(todo.id)}>delete</i>
-            </label>
-          </li>
-        );
+        return <TodoItem todo={todo} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>;
       })}
     </ul>
   );
