@@ -10,7 +10,6 @@ interface TodoListProps {
 }
 
 const TodoList: React.FC<TodoListProps> = ({todos, toggleTodo, deleteTodo}) => {
-  console.log('render list');
   if (Object.values(todos).length === 0) {
     return <p className="center no-select">No todos</p>;
   }

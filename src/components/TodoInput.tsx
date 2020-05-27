@@ -5,7 +5,6 @@ interface TodoInputProps {
 }
 
 const TodoInput: React.FC<TodoInputProps> = React.memo(({addTodo}) => {
-  console.log('render input');
   const ref = useRef<HTMLInputElement>(null);
 
   const pressEnter = (event: React.KeyboardEvent): void => {

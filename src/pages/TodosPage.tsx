@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TodoInput from '../components/TodoInput';
 import TodoList from '../components/TodoList';
 import {TodoItem, TodoState} from '../entities/Intefaces';
@@ -11,15 +11,13 @@ const TodosPage: React.FC = () => {
       localStorage.getItem('todos') || '{}'
     ) as TodoState;
     setTodos(saved);
-    console.log('use effect init');
   }, []);
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-    console.log('use effect save');
   }, [todos]);
 
-  const addTodo = useCallback((title: string): void => {
+  const addTodo = (title: string): void => {
     const id: string = Object.values(todos).length.toString();
     const newTodo: TodoItem = {
       id,
@@ -31,7 +29,7 @@ const TodosPage: React.FC = () => {
       newState[id] = newTodo;
       return newState;
     });
-  }, []);
+  };
 
   const toggleTodo = (id: string): void => {
     setTodos((prev) => {
