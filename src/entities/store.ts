@@ -17,7 +17,7 @@ export const DELETE_TODO = 'DELETE_TODO';
 
 export interface SetTodosAction {
   type: typeof SET_TODOS;
-  state: TodoState;
+  todos: Todo[];
 }
 
 export interface AddTodoAction {
@@ -51,7 +51,11 @@ export const todoReducer: React.Reducer<TodoState, Action> = (
 ) => {
   switch (action.type) {
     case SET_TODOS: {
-      return action.state;
+      let newState: TodoState = {};
+      action.todos.forEach((todo) => {
+        newState[todo.id] = todo;
+      });
+      return newState;
     }
     case ADD_TODO: {
       const todo = action.todo;
@@ -64,7 +68,7 @@ export const todoReducer: React.Reducer<TodoState, Action> = (
       };
       return newState;
     }
-    case 'TOGGLE_TODO': {
+    case TOGGLE_TODO: {
       const item = state[action.id];
       if (!item) return state;
       const newState = {
@@ -76,7 +80,7 @@ export const todoReducer: React.Reducer<TodoState, Action> = (
       };
       return newState;
     }
-    case 'DELETE_TODO': {
+    case DELETE_TODO: {
       if (state[action.id]) {
         let newState = { ...state };
         delete newState[action.id];

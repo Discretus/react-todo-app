@@ -12,7 +12,7 @@ const TodosPage = () => {
     getAll().then((res) => {
       dispatch({
         type: SET_TODOS,
-        state: res,
+        todos: res,
       });
     });
   }, []);
