@@ -1,13 +1,13 @@
 import React from 'react';
 
 export interface Todo {
-  id: string;
+  id: number;
   text: string;
   toggled?: boolean;
 }
 
 export interface TodoState {
-  [id: string]: Todo;
+  [id: number]: Todo;
 }
 
 export const SET_TODOS = 'SET_TODOS';
@@ -22,24 +22,28 @@ export interface SetTodosAction {
 
 export interface AddTodoAction {
   type: typeof ADD_TODO;
-  text: string;
+  todo: Todo;
 }
 
 export interface ToggleTodoAction {
   type: typeof TOGGLE_TODO;
-  id: string;
+  id: number;
 }
 
 export interface DeleteTodoAction {
   type: typeof DELETE_TODO;
-  id: string;
+  id: number;
 }
 
-type Action = SetTodosAction | AddTodoAction | ToggleTodoAction | DeleteTodoAction;
+export type Action =
+  | SetTodosAction
+  | AddTodoAction
+  | ToggleTodoAction
+  | DeleteTodoAction;
 
-export function persistState(state: TodoState): void {
-  localStorage.setItem('todo_state', JSON.stringify(state));
-}
+// export function persistState(state: TodoState): void {
+//   localStorage.setItem('todo_state', JSON.stringify(state));
+// }
 
 export const todoReducer: React.Reducer<TodoState, Action> = (
   state: TodoState,
@@ -50,15 +54,14 @@ export const todoReducer: React.Reducer<TodoState, Action> = (
       return action.state;
     }
     case ADD_TODO: {
-      const nextId = Object.values(state).length.toString();
+      const todo = action.todo;
       const newState = {
         ...state,
-        [nextId]: {
-          id  : nextId,
-          text: action.text,
-        }
+        [todo.id]: {
+          id: todo.id,
+          text: todo.text,
+        },
       };
-      persistState(newState);
       return newState;
     }
     case 'TOGGLE_TODO': {
@@ -69,16 +72,14 @@ export const todoReducer: React.Reducer<TodoState, Action> = (
         [action.id]: {
           ...item,
           toggled: !item.toggled,
-        }
+        },
       };
-      persistState(newState);
       return newState;
     }
     case 'DELETE_TODO': {
       if (state[action.id]) {
-        let newState = {...state};
+        let newState = { ...state };
         delete newState[action.id];
-        persistState(newState);
         return newState;
       } else return state;
     }

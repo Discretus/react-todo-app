@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 
 interface TodoInputProps {
   addTodo(text: string): void;
 }
 
-const TodoInput: React.FC<TodoInputProps> = React.memo(({addTodo}) => {
+const TodoInput: React.FC<TodoInputProps> = React.memo(({ addTodo }) => {
   const ref = useRef<HTMLInputElement>(null);
 
   const pressEnter = (event: React.KeyboardEvent): void => {
@@ -22,7 +22,8 @@ const TodoInput: React.FC<TodoInputProps> = React.memo(({addTodo}) => {
           ref={ref}
           onKeyPress={pressEnter}
           type="text"
-          placeholder="Enter new task"/>
+          placeholder="Enter new task"
+        />
       </div>
     </div>
   );

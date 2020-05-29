@@ -1,46 +1,36 @@
-import React, {useEffect, useReducer} from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import TodoInput from '../components/TodoInput';
 import TodoList from '../components/TodoList';
-import {ADD_TODO, DELETE_TODO, SET_TODOS, Todo, todoReducer, TOGGLE_TODO} from '../entities/store';
+import { ADD_TODO, SET_TODOS, Todo, todoReducer } from '../entities/store';
+import { getAll, add } from '../entities/api';
 
-const TodosPage: React.FC = () => {
+const TodosPage = () => {
   const [todosDict, dispatch] = useReducer(todoReducer, {});
 
   useEffect(() => {
-    const state: string | null = localStorage.getItem('todo_state');
-    if (state) {
+    getAll().then((res) => {
       dispatch({
-        type : SET_TODOS,
-        state: JSON.parse(state)
+        type: SET_TODOS,
+        state: res,
       });
-    }
+    });
   }, []);
 
-  const todos: Todo[] = Object.values(todosDict).reverse();
+  const todos: Todo[] = Object.values(todosDict);
 
-  const addTodo = (text: string) =>
+  const addTodo = async (text: string) => {
+    const todo = await add(text);
     dispatch({
       type: ADD_TODO,
-      text,
+      todo,
     });
-
-  const deleteTodo = (id: string) =>
-    dispatch({
-      type: DELETE_TODO,
-      id,
-    });
-
-  const toggleTodo = (id: string) =>
-    dispatch({
-      type: TOGGLE_TODO,
-      id,
-    });
+  };
 
   return (
     <React.Fragment>
-      <TodoInput addTodo={addTodo}/>
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
+      <TodoInput addTodo={addTodo} />
+      <TodoList todos={todos} dispatch={dispatch} />
     </React.Fragment>
   );
 };
