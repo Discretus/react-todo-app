@@ -1,7 +1,9 @@
 import { Todo } from './store';
 
-const url = 'https://kk-react-todo-app.herokuapp.com/todos';
-// const url = 'http://localhost:4000/todos';
+const url =
+  process.env.NODE_ENV === 'production'
+    ? 'https://kk-react-todo-app.herokuapp.com/todos'
+    : 'http://localhost:4000/todos';
 
 export const getAll = async (): Promise<Todo[]> => {
   return fetch(url, {
