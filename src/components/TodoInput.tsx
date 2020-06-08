@@ -1,16 +1,15 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodoS } from '../redux/todos/todoActions';
 
-interface TodoInputProps {
-  addTodo(text: string): void;
-}
-
-const TodoInput: React.FC<TodoInputProps> = React.memo(({ addTodo }) => {
+const TodoInput = () => {
+  const dispatch = useDispatch();
   const ref = useRef<HTMLInputElement>(null);
 
   const pressEnter = (event: React.KeyboardEvent): void => {
     if (event.key === 'Enter' && ref.current!.value.trim()) {
-      const title = ref.current!.value;
-      addTodo(title);
+      const text = ref.current!.value;
+      dispatch(addTodoS(text));
       ref.current!.value = '';
     }
   };
@@ -27,6 +26,6 @@ const TodoInput: React.FC<TodoInputProps> = React.memo(({ addTodo }) => {
       </div>
     </div>
   );
-});
+};
 
 export default TodoInput;

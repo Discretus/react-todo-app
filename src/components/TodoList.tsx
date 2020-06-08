@@ -1,14 +1,12 @@
 import React from 'react';
-import { Todo } from '../entities/store';
 import TodoItem from './TodoItem';
-import { Action } from '../entities/store';
+import { useSelector } from 'react-redux';
+import { ApplicationState } from '../redux/stateInterfaces';
 
-interface TodoListProps {
-  todos: Todo[];
-  dispatch: React.Dispatch<Action>;
-}
+const TodoList = () => {
+  const todosDict = useSelector((state: ApplicationState) => state.todos);
+  const todos = Object.values(todosDict);
 
-const TodoList: React.FC<TodoListProps> = ({ todos, dispatch }) => {
   if (Object.values(todos).length === 0) {
     return <p className="center no-select">No todos</p>;
   }
@@ -16,7 +14,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, dispatch }) => {
   return (
     <ul>
       {todos.map((todo) => {
-        return <TodoItem todo={todo} dispatch={dispatch} key={todo.id} />;
+        return <TodoItem todo={todo} key={todo.id} />;
       })}
     </ul>
   );

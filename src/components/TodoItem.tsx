@@ -1,31 +1,15 @@
 import React from 'react';
-import { Todo, Action, DELETE_TODO, TOGGLE_TODO } from '../entities/store';
-import { del, toggle } from '../entities/api';
+import { Todo } from '../redux/entities';
+import { useDispatch } from 'react-redux';
+import { toggleTodoS, deleteTodoS } from '../redux/todos/todoActions';
 
 interface TodoItemProps {
   todo: Todo;
-
-  dispatch: React.Dispatch<Action>;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ todo, dispatch }) => {
+const TodoItem = ({ todo }: TodoItemProps) => {
+  const dispatch = useDispatch();
   const classes = ['todo'];
-
-  const deleteTodo = async (id: number) => {
-    const todo = await del(id);
-    dispatch({
-      type: DELETE_TODO,
-      id: todo.id,
-    });
-  };
-
-  const toggleTodo = async (id: number) => {
-    const todo = await toggle(id);
-    dispatch({
-      type: TOGGLE_TODO,
-      id: todo.id,
-    });
-  };
 
   if (todo.toggled) {
     classes.push('completed');
@@ -37,12 +21,15 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, dispatch }) => {
         <input
           type="checkbox"
           checked={todo.toggled}
-          onChange={() => toggleTodo(todo.id)}
+          onChange={() => dispatch(toggleTodoS(todo.id))}
         />
         <span>{todo.text}</span>
         <i
           className="material-icons red-text no-select"
-          onClick={() => deleteTodo(todo.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(deleteTodoS(todo.id));
+          }}
         >
           delete
         </i>
